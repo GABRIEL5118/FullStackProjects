@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add NEW Shift</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <style>
+    body {
+      background-color: #9595af;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 100px;
+      font-size: 46px;
+      margin-bottom: 30px;
+      color: rgb(14, 52, 206);
+    }
+    input {
+      color: red;
+    }
+    #logoutButton {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: aquamarine;
+      color: black;
+      font-weight: bold;
+      font-size: 25px;
+      border: 3px solid;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+    #logoutButton:hover {
+      background-color: red;
+      color: white;
+      border: white;
+    }
+    #backButton {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: rgb(45, 125, 229);
+      color: black;
+      font-weight: bold;
+      font-size: 25px;
+      border: 3px solid black;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    #backButton:hover {
+      background-color: grey;
+      color: white;
+      border: white;
+    }
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+  <body>
+    <h1>Add NEW Shift</h1>
+    <a href="javascript:void(0);" id="logoutButton" onclick="logout()"
+      >LOG OUT</a
+    >
+    <button id="backButton" onclick="toMain()">Back to Shift page</button>
+    <form action="./Shifts.html">
+      <label for="Shift">Date:</label>
+      <input type="date" id="date" placeholder="YEAR-MM-DD" /><br />
+      <label for="Shift">Start Hour:</label>
+      <input type="number" id="SH" placeholder="HH" /><br />
+      <label for="Shift">End Hour:</label>
+      <input type="number" id="EH" placeholder="HH" /><br />
+      <label for="Shift">Employees ID's (separate by comma):</label><br />
+      <input type="text" id="employees" placeholder="id1,id2..." /><br /><br />
+      <button type="button" class="btn btn-primary" onclick="addShift()">
+        Add NEW Shift
+      </button>
+    </form>
+    <script>
+      async function addShift() {
+        const url = "http://localhost:3000/factory/shifts";
+
+        const obj = {
+          Date: document.getElementById("date").value,
+          StartingHour: document.getElementById("SH").value,
+          EndingHour: document.getElementById("EH").value,
+          Employees: document.getElementById("employees").value,
+        };
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(obj),
+        });
+        const data = await resp.text();
+        alert(data);
+        console.log(data);
+        window.location.replace("./Shifts.html");
+      }
+
+      function logout() {
+        window.location.replace("./Login.html");
+      }
+      function toMain() {
+        window.location.href = "./Shifts.html";
+      }
+    </script>
+  </body>
+</html>
