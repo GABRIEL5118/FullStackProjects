@@ -93,5 +93,3 @@ src/
 This project is open-source and available under the MIT License.
 
 ---
-
-Feel free to contribute to the project or use it as a template for your own projects!
