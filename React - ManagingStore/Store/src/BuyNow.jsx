@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { db } from "./firebase";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { useLocation } from "react-router-dom";
 
 const BuyNow = () => {
@@ -11,7 +17,8 @@ const BuyNow = () => {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [isCustomerSelected, setIsCustomerSelected] = useState(true); // set true since we already have customer data from the location state
+  const [isCustomerSelected, setIsCustomerSelected] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -38,6 +45,18 @@ const BuyNow = () => {
   const addPurchase = async () => {
     if (!selectedProduct || !quantity || !price || !customerId) return;
 
+    const selectedProductData = products.find(
+      (product) => product.name === selectedProduct
+    );
+    const availableQuantity = selectedProductData?.quantity || 0;
+
+    if (parseInt(quantity) > availableQuantity) {
+      setErrorMessage(
+        `Not enough stock available. Max quantity: ${availableQuantity}`
+      );
+      return;
+    }
+
     await addDoc(collection(db, "purchases"), {
       product: selectedProduct,
       customerId: customerId,
@@ -46,6 +65,11 @@ const BuyNow = () => {
       price: parseFloat(price),
       totalPrice: totalPrice,
       date: new Date(),
+    });
+
+    const productRef = doc(db, "products", selectedProductData.id);
+    await updateDoc(productRef, {
+      quantity: availableQuantity - parseInt(quantity),
     });
 
     alert("Purchase completed successfully!");
@@ -75,6 +99,8 @@ const BuyNow = () => {
           <input type="number" placeholder="Price" value={price} readOnly />
 
           <div>Total Price: {totalPrice}</div>
+
+          {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
 
           <button onClick={addPurchase}>Buy Now</button>
         </>
