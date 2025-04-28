@@ -124,7 +124,7 @@ const ProductsApp = () => {
         <h5>Total Number of Products: {products.length}</h5>
       </div>
 
-      <h2>Edit Product</h2>
+      <h2>Add / Edit(click Product) Product</h2>
       <input
         type="text"
         name="name"
