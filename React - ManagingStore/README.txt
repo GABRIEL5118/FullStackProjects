@@ -30,32 +30,8 @@ src/
 │
 ├── firebase.js                   Firebase configuration and initialization
 │
-└── index.js                      Entry point of the application
+└── main.js                      Entry point of the application
 ```
-
- Setup Instructions
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <project-directory>
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Firebase Configuration:
-   - Create a Firebase project on [Firebase Console](https://console.firebase.google.com/).
-   - Add your Firebase configuration in `firebase.js` by replacing the placeholders with your Firebase credentials.
-
-4. Run the application:
-   ```bash
-   npm start
-   ```
-
-   This will start the development server and open the application in your default browser.
 
  Usage
 
