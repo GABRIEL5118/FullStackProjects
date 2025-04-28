@@ -105,10 +105,10 @@ const ProductsApp = () => {
             style={{
               border: prod.id === selectedProductId ? "2px solid red" : "none",
               padding: "5px",
-              width: "200px",
+              width: "350px",
             }}
           >
-            {prod.name} - ${prod.price} ({prod.quantity} pcs)
+            {prod.name} - Price: ${prod.price} ({prod.quantity} pcs available)
           </li>
         ))}
       </ul>
@@ -124,7 +124,7 @@ const ProductsApp = () => {
         <h5>Total Number of Products: {products.length}</h5>
       </div>
 
-      <h2>Add / Edit(click Product) Product</h2>
+      <h2>Add / Edit Product (Click Product to Edit)</h2>
       <input
         type="text"
         name="name"
